@@ -10,7 +10,7 @@ const app  = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: ["http://localhost:5173","http://localhost:3000","http://127.0.0.1:5173", process.env.FRONTEND_URL].filter(Boolean),
+  origin: ["http://localhost:5173","http://localhost:3000","http://127.0.0.1:5173", process.env.FRONTEND_URL, "https://et-ai-concierge-team-codex.vercel.app"].filter(Boolean),
   methods: ["GET","POST","PUT","DELETE"],
   allowedHeaders: ["Content-Type","Authorization"],
 }));
