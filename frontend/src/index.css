@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --et-red: #e8002d;
+  --et-red-glow: rgba(232, 0, 45, 0.15);
+  --et-gold: #c9a84c;
+  --et-dark: #060608;
+  --et-card: #0d0d10;
+  --et-border: #18181c;
+  --et-border2: #222226;
+  --et-muted: #2a2a30;
+  --et-text: #e8e6e1;
+  --et-sub: #888888;
+  --et-green: #22c55e;
+  --et-blue: #60a5fa;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--et-dark);
+  color: var(--et-text);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--et-border2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--et-muted); }
+
+.ticker-wrap {
+  overflow: hidden;
+  background: rgba(232,0,45,0.03);
+  border-bottom: 1px solid rgba(232,0,45,0.08);
+  height: 26px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.ticker-wrap::before, .ticker-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 60px;
+  z-index: 2;
+  pointer-events: none;
+}
+.ticker-wrap::before { left: 0; background: linear-gradient(90deg, #060608, transparent); }
+.ticker-wrap::after  { right: 0; background: linear-gradient(-90deg, #060608, transparent); }
+
+.ticker-track {
+  display: flex;
+  animation: tickerScroll 45s linear infinite;
+  white-space: nowrap;
+  will-change: transform;
+}
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  color: #3a3a3a;
+  border-right: 1px solid #141416;
+  letter-spacing: 0.02em;
+}
+.ticker-item .sym { color: #555; font-weight: 600; }
+.ticker-item .val { color: #666; }
+.ticker-item .up  { color: #22c55e; }
+.ticker-item .dn  { color: #ef4444; }
+
+.market-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(232,0,45,0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232,0,45,0.012) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 10%, transparent 80%);
+}
+
+.glow-top {
+  position: fixed;
+  width: 800px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,0,45,0.055) 0%, transparent 65%);
+  top: -250px; left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 0;
+  animation: orbFloat 10s ease-in-out infinite;
+}
+
+@layer components {
+  .glass-card {
+    background: rgba(13, 13, 16, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(20px);
+  }
+  .shimmer-text {
+    background: linear-gradient(90deg, #444 0%, #888 40%, #444 80%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
+  .et-accent { border-left: 3px solid var(--et-red); padding-left: 12px; }
+}
+
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes dotPulse { 0%, 100% { transform: translateY(0); opacity: 0.4; } 50% { transform: translateY(-4px); opacity: 1; } }
+@keyframes pingRed { 0% { transform: scale(1); opacity: 1; } 75%, 100% { transform: scale(2.2); opacity: 0; } }
+@keyframes breathe { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+@keyframes voiceRing { 0%, 100% { box-shadow: 0 0 0 0 rgba(232,0,45,0.35); } 50% { box-shadow: 0 0 0 7px rgba(232,0,45,0); } }
+@keyframes agentPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(232,0,45,0); } 50% { box-shadow: 0 0 0 6px rgba(232,0,45,0.12); } }
+@keyframes borderGlow { 0%, 100% { border-color: rgba(232,0,45,0.2); } 50% { border-color: rgba(232,0,45,0.5); box-shadow: 0 0 16px rgba(232,0,45,0.1); } }
+@keyframes orbFloat { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-18px); } }
+@keyframes tickerScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+@keyframes chartDraw { from { stroke-dashoffset: 1000; } to { stroke-dashoffset: 0; } }
+@keyframes candleRise { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes numberFloat { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes lineGrow { from { width: 0%; } to { width: var(--pct); } }
+@keyframes priceFlash { 0%,100% { background: transparent; } 30% { background: rgba(34,197,94,0.12); } }
+
+.fadeUp { animation: fadeUp 0.3s ease both; }
+.animate-fade-in { animation: fadeIn 0.5s ease forwards; }
+.animate-slide-up { animation: slideUp 0.4s ease forwards; }
+.animate-blink { animation: blink 1s step-end infinite; }
+.font-display { font-family: 'Playfair Display', Georgia, serif; }
+.font-mono { font-family: 'JetBrains Mono', monospace; }
+
+.card { background: var(--et-card); border: 1px solid var(--et-border); border-radius: 12px; padding: 14px; }
+.label { display: inline-flex; align-items: center; gap: 5px; font-size: 9px; font-family: 'JetBrains Mono', monospace; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 99px; border: 1px solid; margin-bottom: 11px; }
+.tag { display: inline-flex; align-items: center; font-size: 9px; font-family: 'JetBrains Mono', monospace; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; padding: 2px 8px; border-radius: 99px; }
+.chip { display: inline-flex; align-items: center; font-size: 10px; padding: 3px 8px; border-radius: 99px; background: #0e0e12; border: 1px solid #1e1e22; color: #555; }
+
+textarea:focus, input:focus { outline: none; }
+
+.sparkline-path { stroke-dasharray: 1000; animation: chartDraw 1.8s ease forwards; }
+.candle-bar { transform-origin: bottom; animation: candleRise 0.5s ease-out both; }
+.price-num { animation: numberFloat 0.4s ease both; }
+
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
