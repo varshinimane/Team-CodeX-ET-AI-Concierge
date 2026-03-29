@@ -23,7 +23,7 @@ Open: http://localhost:5173
 
 ---
 
-## What's New in v4.0
+## What's New in ET-AI-Concierge
 
 ### Feature 1 — Supabase Auth
 - Email + password signup/login via Supabase Auth
