@@ -1,4 +1,4 @@
-# ET AI Concierge v4.0
+# ET AI Concierge (Team CodeX)
 ### Economic Times · OpenRouter · Supabase Auth · 7-Agent Pipeline
 
 ---
